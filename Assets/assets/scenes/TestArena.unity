@@ -129,7 +129,10 @@ GameObject:
   m_Component:
   - component: {fileID: 29211068}
   - component: {fileID: 29211069}
+  - component: {fileID: 29211071}
   - component: {fileID: 29211070}
+  - component: {fileID: 29211073}
+  - component: {fileID: 29211072}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -184,12 +187,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 29211067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf08673a838e6ec47aee2d068909588b, type: 3}
+  m_Script: {fileID: 11500000, guid: 39c51de2c1acac94c93ffb2530d056cf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyPatrol
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyActions
+  player: {fileID: 241341412}
   patrolPoints:
   - {fileID: 1699400689}
   - {fileID: 378881552}
+  patrolSpeed: 3.5
+  chaseSpeed: 5.5
+--- !u!114 &29211071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29211067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5984f48dca36f4b8c843835183c9ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPerception
+  player: {fileID: 241341412}
+  viewDistance: 12
+  viewAngle: 110
+  visionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  walkHearingRange: 4
+  runHearingRange: 8
+  runningThreshold: 6
+  canSeePlayer: 0
+  canHearPlayer: 0
+--- !u!114 &29211072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29211067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df48c9c5c6c4254449071483ca4365cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FSMController
+  lostPlayerDelay: 2
+--- !u!114 &29211073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29211067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b2d254fdbcea6469be1e0a74e24c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
+  controllerComponent: {fileID: 29211072}
+  decisionInterval: 0.2
 --- !u!1 &189210829
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +374,7 @@ GameObject:
   - component: {fileID: 241341413}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -333,7 +389,7 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -437,7 +493,7 @@ Transform:
   m_GameObject: {fileID: 241341407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 1, z: -10}
+  m_LocalPosition: {x: -9.77, y: 1, z: -9.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,4 +1,6 @@
 
+
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,10 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 input = Vector2.zero;
-
         if (Keyboard.current == null)
             return;
+
+        Vector2 input = Vector2.zero;
 
         if (Keyboard.current.wKey.isPressed) input.y += 1;
         if (Keyboard.current.sKey.isPressed) input.y -= 1;
@@ -34,21 +36,26 @@ public class PlayerMovement : MonoBehaviour
         bool running = Keyboard.current.leftShiftKey.isPressed;
         float speed = running ? runSpeed : walkSpeed;
 
-        Vector3 movement = new Vector3(input.x, 0f, input.y);
+        Vector3 movement =
+            new Vector3(input.x, 0f, input.y);
 
         if (movement.sqrMagnitude > 0.01f)
         {
             transform.forward = movement.normalized;
         }
 
-        controller.Move(movement * speed * Time.deltaTime);
-
-        if (controller.isGrounded && verticalVelocity.y < 0f)
+        if (controller.isGrounded &&
+            verticalVelocity.y < 0f)
         {
             verticalVelocity.y = -2f;
         }
 
         verticalVelocity.y += gravity * Time.deltaTime;
-        controller.Move(verticalVelocity * Time.deltaTime);
+
+        // Tek Move çaðrýsý: yatay + dikey hareket
+        Vector3 totalMovement =
+            movement * speed + verticalVelocity;
+
+        controller.Move(totalMovement * Time.deltaTime);
     }
 }
